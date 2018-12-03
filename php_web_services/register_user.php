@@ -1,35 +1,58 @@
 <?php
     require 'vendor/autoload.php';
-    // require_once("includes/personal_connection.php");
-    require_once("includes/connection.php");
-    require_once("includes/mail_templating.php");
+    require_once("includes/personal_connection.php");
+    // require_once("includes/connection.php");
+    include_once("includes/email_authentification.php");
     use Mailgun\Mailgun;
 
     $dotenv = new Dotenv\Dotenv(__DIR__);
     $dotenv->load();
 
+/*TEST*/
+/*$_POST["user_last_name"] = "Rado";
+$_POST["user_first_name"] = "rakoto";
+$_POST["user_pseudo"] = "rakoto";
+$_POST["user_email"] = "rakotora@gmail.com";
+$_POST["user_password"] = "123456";
+$_POST["password_confirm"] = "123456";*/
+/*TEST*/
+
+
+
+
     // S'il existe un variable poste, on enverra le résultat format json
     if(isset($_POST)){
         //echo json_encode($_POST);
-        if(!empty($_POST["user_name"]) &&
+        if(!empty($_POST["user_last_name"]) &&
+            !empty($_POST["user_first_name"]) &&
             !empty($_POST["user_pseudo"]) &&
             !empty($_POST["user_email"]) &&
             !empty($_POST["user_password"]) &&
             !empty($_POST["password_confirm"]))
         {
-            $nom = $_POST["user_name"];
+            $nom = $_POST["user_last_name"];
+            $prenom = $_POST["user_first_name"];
             $pseudo = $_POST["user_pseudo"];
             $email = $_POST["user_email"];
             $password = $_POST["user_password"];
             $password_confirm = $_POST["password_confirm"];
 
             //Vérification du nom
+            //Le nom doit être alphabétique et plus de 2 caractère
             if(strlen($nom) < 2 ||
-                !preg_match("/^[a-zA-Z0-9 -]+$/", $nom) ||
-                strlen($nom) > 60)
+                !preg_match("/^[a-zA-Z -]+$/", $nom))
             {
                     $results["error"] = true;
-                    $results["message"]["user_name"] = "Nom invalide";
+                    $results["message"]["user_last_name"] = "Nom invalide";
+            }
+
+            //Vérification du prénom
+            //Le prénom doit être alphabétique et plus de 2 caractère
+            if(strlen($prenom) < 2 ||
+                !preg_match("/^[a-zA-Z -]+$/", $prenom))
+            {
+                    $results["error"] = true;
+                    $results["message"]["user_first_name"] = "Prénom invalide";
             }
 
             //Vérification du pseudo
@@ -73,7 +96,8 @@
                 $results["message"]["user_password"] = "Les mots de passe doivent être identique";
             }
 
-            if($results["error"] === false){
+            if($results["error"] === false)
+            {
                 # Instantiate the client. with api-key for parametter
                 $mgClient = new Mailgun($_ENV['MAILGUN_API_KEY']);
 
@@ -87,9 +111,28 @@
                 
 
                 //Insertion
-                $sql = $pdo->prepare("INSERT INTO tbl_users(user_name, user_pseudo, user_email, encrypted_password, token, status) VALUES(:nom, :pseudo, :email, :password, :token, :status)");
+                $sql = $pdo->prepare(
+                    "INSERT INTO tbl_users(
+                        user_last_name,
+                        user_first_name,
+                        user_pseudo,
+                        user_email,
+                        encrypted_password,
+                        token,
+                        status)
+                    VALUES(
+                        :nom,
+                        :prenom,
+                        :pseudo,
+                        :email,
+                        :password,
+                        :token,
+                        :status)
+                    ");
+
                 $sql->execute([
                     ":nom" => $nom,
+                    ":prenom" => $prenom,
                     ":pseudo" => $pseudo,
                     ":email" => $email,
                     ":password" => $password,
@@ -105,20 +148,39 @@
                 //Build the HTML for the link.
                 $link = "<a href='" . $url . "'>Confirmer votre inscription</a>";
 
+                $titre = "Bonjour $nom $prenom alias <strong>$pseudo</strong>";
+
+                $contenu = "Vous venez de vous inscrire via notre application mobile <strong>UNITED MALAGASY</strong>. A fin de confirmer votre inscription, veillez cliquer sur le lien suivant";
+
+                $message = templateAuthentification($titre, $contenu, $link);
 
                 // Envoi de mail
+/*                
                 $resultat = $mgClient->sendMessage($domain,
                 [
                   'from'    => 'andryhaj@gmail.com', //Sender
                   'to'      => "$email", //Destinataire = user
                   'subject' => 'Authentification',
-                  'text'    => "Bonjour $nom alias $pseudo, vous venez de vous inscrire via notre application mobile UNITED MALAGASY. A fin de confirmer votre inscription, veillez cliquer sur le lien suivant $link"
-                ]);
+                  'html'    => "$message"
+                ]);*/
+                
+                // var_dump($sql);
+                // echo $userId;
 
                 if(!$sql){
                     $results["error"] = true;
                     $results["message"] = "Erreur lors de l'inscription";
                 }
+
+                // Envoi de mail
+                
+                $resultat = $mgClient->sendMessage($domain,
+                [
+                  'from'    => 'andryhaj@gmail.com', //Sender
+                  'to'      => "$email", //Destinataire = user
+                  'subject' => 'Authentification',
+                  'html'    => "$message"
+                ]);
             }
         }else{
             $results["error"] = true;

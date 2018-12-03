@@ -12,7 +12,7 @@
 	    $token = trim($_GET['token']);
 	    $userId = trim($_GET['user']);
 	    
-	    $sql = "SELECT user_email, COUNT(*) AS num FROM tbl_users WHERE id = :user_id AND token = :token";
+	    $sql = "SELECT user_email, user_pseudo, COUNT(*) AS num FROM tbl_users WHERE id = :user_id AND token = :token";
 	    $stmt = $pdo->prepare($sql);
 	    $stmt->bindParam(':user_id', $userId);
 	    $stmt->bindParam(':token', $token);
@@ -29,6 +29,14 @@
 		    $mgClient = new Mailgun($_ENV['MAILGUN_API_KEY']);
 		    $domain = "sandbox8696153101784b64bdc9443716fd6514.mailgun.org";
 
+		    $user_pseudo = $result['user_pseudo'];
+            $titre = "Félicitation $user_pseudo";
+
+            $link = "http://192.168.88.166/hdvideo2424/united_malagasy/index.php"
+            
+            $contenu = "Votre inscription vien d'être validé.";
+            $message = templateConfirmation($titre, $contenu, $link);
+
 		    # Make the call to the client.
 
 		    $resultat = $mgClient->sendMessage($domain,
@@ -36,7 +44,7 @@
 					  'from'    => 'andryhaj@gmail.com',
 					  'to'      => $result['user_email'],
 					  'subject' => 'Mail de confirmation',
-					  'text'    => "Félicitation, votre inscription vien d'être validé."
+					  'text'    => $message
 					]);
 	    } else{
 	        //Token is not valid.

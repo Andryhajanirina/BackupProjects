@@ -54,12 +54,16 @@
 			 $results["error"] = false;
 			 $results["message"] = [];
 		}
-	
+
+	$options = array(
+		PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+		PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES UTF8"
+	);
 	// $mysqli =mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
 	// $mysqli = new mysqli(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME); //Orientée Objet
 	try{
-		$pdo = new PDO("mysql:host=".$dbHost.";dbname=".$dbName, $dbUsername, $dbPassword);
-		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$pdo = new PDO("mysql:host=".$dbHost.";dbname=".$dbName, $dbUsername, $dbPassword, $options);
+		// $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }catch(PDOException $e){
         die("Filed to connect to MySQL :".$e->getMessage());
     }

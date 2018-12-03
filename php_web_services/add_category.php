@@ -18,21 +18,40 @@
    
     //Thumb Image 
      $thumbpath='images/thumbs/'.$category_image;   
-       $thumb_pic1=create_thumb_image($tpath1,$thumbpath,'300','300');   
+     $thumb_pic1=create_thumb_image($tpath1,$thumbpath,'300','300');   
  
           
-       $data = array( 
+     $data = array( 
           'category_name'  =>  $_POST['category_name'],
          'category_image'  =>  $category_image
           );    
 
-    $qry = Insert('tbl_category',$data);  
+    /*Commenté pour test utilisé une requette directe*/
+    // $qry = Insert('tbl_category',$data);
+
+      /*TEST*/ 
+      $sql = "INSERT INTO tbl_category(
+                  category_name,
+                  category_image
+                )
+                VALUES (
+                  :category_name,
+                  :category_image
+                )";
+
+
+      $query = $pdo->prepare($sql);
+      $query->execute([
+              ":category_name" => $data['category_name'],
+              ":category_image" => $data['category_image']
+      ]);
+    /*TEST*/   
  
 
-    $_SESSION['msg']="10";
- 
-    header( "Location:manage_category.php");
-    exit; 
+      $_SESSION['msg']="10";
+   
+      header( "Location:manage_category.php");
+      exit; 
 
      
     
@@ -53,7 +72,7 @@
      {    
 
 
-        $img_res = $pdo->query($mysqli,'SELECT * FROM tbl_category WHERE cid='.$_GET['cat_id'].'');
+        $img_res = $pdo->query('SELECT * FROM tbl_category WHERE cid='.$_GET['cat_id'].'');
           $img_res_row = $img_res->fetch(PDO::FETCH_ASSOC);
       
 

@@ -10,7 +10,7 @@
                   WHERE tbl_category.category_name like '%".addslashes($_POST['search_value'])."%'
                   ORDER BY tbl_category.category_name";
  
-      $result=$pdo->query($qry); 
+      $result=$pdo->query($qry);
 
   }
   else
@@ -25,6 +25,7 @@
       $query = $pdo->query("SELECT COUNT(*) as num FROM $tableName");
 
       $total_pages = $query->fetch(PDO::FETCH_ASSOC);
+      // $total_pages = mysqli_fetch_array(mysqli_query($mysqli,$query));
       $total_pages = $total_pages['num'];
       
       $stages = 3;
@@ -70,7 +71,7 @@
 
   function get_total_item($cat_id)
   { 
-    global $mysqli;   
+    global $pdo;   
 
     $qry_songs = $pdo->query("SELECT COUNT(*) as num FROM tbl_video WHERE cat_id='".$cat_id."'");
      
@@ -104,6 +105,7 @@
   }  
 	 
 ?>
+                
                 
     <div class="row">
       <div class="col-xs-12">
@@ -140,13 +142,13 @@
             <div class="row">
               <?php 
               $i=0;
-              while($row = $result->fetch(PDO::FETCH_ASSOC))
-              {         
+              while($row=$result->fetch(PDO::FETCH_ASSOC))
+              {
           ?>
               <div class="col-lg-3 col-sm-6 col-xs-12">
                 <div class="block_wallpaper add_wall_category">           
                   <div class="wall_image_title">
-                    <h2><a href="javascript:void(0)"><?php echo $row['category_name'];?> <span>(<?php echo get_total_item($row['cid']);?>)</span></a></h2>
+                    <h2><a href="javascript:void(0)"><?php echo $row['category_name'];?> <span><?php echo get_total_item($row['cid']);?></span></a></h2>
                     <ul>                
                       <li><a href="add_category.php?cat_id=<?php echo $row['cid'];?>" data-toggle="tooltip" data-tooltip="Edit"><i class="fa fa-edit"></i></a></li>               
                       <li><a href="?cat_id=<?php echo $row['cid'];?>" data-toggle="tooltip" data-tooltip="Delete" onclick="return confirm('Are you sure you want to delete this category?');"><i class="fa fa-trash"></i></a></li>

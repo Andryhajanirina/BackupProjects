@@ -78,18 +78,28 @@
 			$row['cat_id'] = $data['cat_id'];
 			$row['video_type'] = $data['video_type'];
 			$row['video_title'] = $data['video_title'];
-			$row['video_url'] = $data['video_url'];
+			// $row['video_url'] = $data['video_url'];
 			$row['video_id'] = $data['video_id'];
 			
 			if($data['video_type']=='server_url' or $data['video_type']=='local')
 			{
 				$row['video_thumbnail_b'] = $file_path.'images/'.$data['video_thumbnail'];
 				$row['video_thumbnail_s'] = $file_path.'images/thumbs/'.$data['video_thumbnail'];
+
+				/*Remplacer le localhost par l'adresse IP*/
+				$mon_ip = $_SERVER['REMOTE_ADDR'];
+
+				$pattern = '/localhost/';
+				$replacement = $mon_ip;
+				$subject = $data['video_url'];
+				
+				$row['video_url'] = preg_replace($pattern, $replacement, $subject);
 			}
 			else
 			{
 				$row['video_thumbnail_b'] = $data['video_thumbnail'];
 				$row['video_thumbnail_s'] = $data['video_thumbnail'];
+				$row['video_url'] = $data['video_url'];
 			}
  
 			$row['video_duration'] = $data['video_duration'];
@@ -150,18 +160,28 @@
 			$row['cat_id'] = $data['cat_id'];
 			$row['video_type'] = $data['video_type'];
 			$row['video_title'] = $data['video_title'];
-			$row['video_url'] = $data['video_url'];
+			// $row['video_url'] = $data['video_url'];
 			$row['video_id'] = $data['video_id'];
 			
 			if($data['video_type']=='server_url' or $data['video_type']=='local')
 			{
 				$row['video_thumbnail_b'] = $file_path.'images/'.$data['video_thumbnail'];
 				$row['video_thumbnail_s'] = $file_path.'images/thumbs/'.$data['video_thumbnail'];
+
+				/*Remplacer le localhost par l'adresse IP*/
+				$mon_ip = $_SERVER['REMOTE_ADDR'];
+
+				$pattern = '/localhost/';
+				$replacement = $mon_ip;
+				$subject = $data['video_url'];
+				
+				$row['video_url'] = preg_replace($pattern, $replacement, $subject);
 			}
 			else
 			{
 				$row['video_thumbnail_b'] = $data['video_thumbnail'];
 				$row['video_thumbnail_s'] = $data['video_thumbnail'];
+				$row['video_url'] = $data['video_url'];
 			}
  
 			$row['video_duration'] = $data['video_duration'];
@@ -210,18 +230,28 @@
 			$row['cat_id'] = $data['cat_id'];
 			$row['video_type'] = $data['video_type'];
 			$row['video_title'] = $data['video_title'];
-			$row['video_url'] = $data['video_url'];
+			// $row['video_url'] = $data['video_url'];
 			$row['video_id'] = $data['video_id'];
 
 			if($data['video_type']=='server_url' or $data['video_type']=='local')
 			{
 				$row['video_thumbnail_b'] = $file_path.'images/'.$data['video_thumbnail'];
 				$row['video_thumbnail_s'] = $file_path.'images/thumbs/'.$data['video_thumbnail'];
+
+				/*Remplacer le localhost par l'adresse IP*/
+				$mon_ip = $_SERVER['REMOTE_ADDR'];
+
+				$pattern = '/localhost/';
+				$replacement = $mon_ip;
+				$subject = $data['video_url'];
+				
+				$row['video_url'] = preg_replace($pattern, $replacement, $subject);
 			}
 			else
 			{
 				$row['video_thumbnail_b'] = $data['video_thumbnail'];
 				$row['video_thumbnail_s'] = $data['video_thumbnail'];
+				$row['video_url'] = $data['video_url'];
 			}
 
 			$row['video_duration'] = $data['video_duration'];
@@ -268,18 +298,28 @@
 			$row['cat_id'] = $data['cat_id'];
 			$row['video_type'] = $data['video_type'];
 			$row['video_title'] = $data['video_title'];
-			$row['video_url'] = $data['video_url'];
+			// $row['video_url'] = $data['video_url'];
 			$row['video_id'] = $data['video_id'];
 
 			if($data['video_type']=='server_url' or $data['video_type']=='local')
 			{
 				$row['video_thumbnail_b'] = $file_path.'images/'.$data['video_thumbnail'];
 				$row['video_thumbnail_s'] = $file_path.'images/thumbs/'.$data['video_thumbnail'];
+
+				/*Remplacer le localhost par l'adresse IP*/
+				$mon_ip = $_SERVER['REMOTE_ADDR'];
+
+				$pattern = '/localhost/';
+				$replacement = $mon_ip;
+				$subject = $data['video_url'];
+				
+				$row['video_url'] = preg_replace($pattern, $replacement, $subject);
 			}
 			else
 			{
 				$row['video_thumbnail_b'] = $data['video_thumbnail'];
 				$row['video_thumbnail_s'] = $data['video_thumbnail'];
+				$row['video_url'] = $data['video_url'];
 			}
 
 			$row['video_duration'] = $data['video_duration'];
@@ -325,18 +365,28 @@
 			$row_0['cat_id'] = $data_featured['cat_id'];
 			$row_0['video_type'] = $data_featured['video_type'];
 			$row_0['video_title'] = $data_featured['video_title'];
-			$row_0['video_url'] = $data_featured['video_url'];
+			// $row_0['video_url'] = $data_featured['video_url'];
 			$row_0['video_id'] = $data_featured['video_id'];
 			 
 			if($data_featured['video_type']=='server_url' or $data_featured['video_type']=='local')
 			{
 				$row_0['video_thumbnail_b'] = $file_path.'images/'.$data_featured['video_thumbnail'];
 				$row_0['video_thumbnail_s'] = $file_path.'images/thumbs/'.$data_featured['video_thumbnail'];
+
+				/*Remplacer le localhost par l'adresse IP*/
+				$mon_ip = $_SERVER['REMOTE_ADDR'];
+
+				$pattern = '/localhost/';
+				$replacement = $mon_ip;
+				$subject = $data_featured['video_url'];
+				
+				$row_0['video_url'] = preg_replace($pattern, $replacement, $subject);
 			}
 			else
 			{
 				$row_0['video_thumbnail_b'] = $data_featured['video_thumbnail'];
 				$row_0['video_thumbnail_s'] = $data_featured['video_thumbnail'];
+				$row_0['video_url'] = $data_featured['video_url'];
 			}
 
 			$row_0['video_duration'] = $data_featured['video_duration'];
@@ -374,18 +424,28 @@
 			$row0['cat_id'] = $data_view['cat_id'];
 			$row0['video_type'] = $data_view['video_type'];
 			$row0['video_title'] = $data_view['video_title'];
-			$row0['video_url'] = $data_view['video_url'];
+			// $row0['video_url'] = $data_view['video_url'];
 			$row0['video_id'] = $data_view['video_id'];
 			 
 			if($data_view['video_type']=='server_url' or $data_view['video_type']=='local')
 			{
 				$row0['video_thumbnail_b'] = $file_path.'images/'.$data_view['video_thumbnail'];
 				$row0['video_thumbnail_s'] = $file_path.'images/thumbs/'.$data_view['video_thumbnail'];
+
+				/*Remplacer le localhost par l'adresse IP*/
+				$mon_ip = $_SERVER['REMOTE_ADDR'];
+
+				$pattern = '/localhost/';
+				$replacement = $mon_ip;
+				$subject = $data_view['video_url'];
+				
+				$row0['video_url'] = preg_replace($pattern, $replacement, $subject);	
 			}
 			else
 			{
 				$row0['video_thumbnail_b'] = $data_view['video_thumbnail'];
 				$row0['video_thumbnail_s'] = $data_view['video_thumbnail'];
+				$row0['video_url'] = $data_view['video_url'];
 			}
 
 			$row0['video_duration'] = $data_view['video_duration'];
@@ -424,18 +484,28 @@
 			$row1['cat_id'] = $data['cat_id'];
 			$row1['video_type'] = $data['video_type'];
 			$row1['video_title'] = $data['video_title'];
-			$row1['video_url'] = $data['video_url'];
+			// $row1['video_url'] = $data['video_url'];
 			$row1['video_id'] = $data['video_id'];
 			 
 			if($data['video_type']=='server_url' or $data['video_type']=='local')
 			{
 				$row1['video_thumbnail_b'] = $file_path.'images/'.$data['video_thumbnail'];
 				$row1['video_thumbnail_s'] = $file_path.'images/thumbs/'.$data['video_thumbnail'];
+
+				/*Remplacer le localhost par l'adresse IP*/
+				$mon_ip = $_SERVER['REMOTE_ADDR'];
+
+				$pattern = '/localhost/';
+				$replacement = $mon_ip;
+				$subject = $data['video_url'];
+				
+				$row1['video_url'] = preg_replace($pattern, $replacement, $subject);	
 			}
 			else
 			{
 				$row1['video_thumbnail_b'] = $data['video_thumbnail'];
 				$row1['video_thumbnail_s'] = $data['video_thumbnail'];
+				$row1['video_url'] = $data['video_url'];
 			}
 
 			$row1['video_duration'] = $data['video_duration'];
@@ -512,18 +582,28 @@
 			$row0['cat_id'] = $data_view['cat_id'];
 			$row0['video_type'] = $data_view['video_type'];
 			$row0['video_title'] = $data_view['video_title'];
-			$row0['video_url'] = $data_view['video_url'];
+			// $row0['video_url'] = $data_view['video_url'];
 			$row0['video_id'] = $data_view['video_id'];
 			 
 			if($data_view['video_type']=='server_url' or $data_view['video_type']=='local')
 			{
 				$row0['video_thumbnail_b'] = $file_path.'images/'.$data_view['video_thumbnail'];
 				$row0['video_thumbnail_s'] = $file_path.'images/thumbs/'.$data_view['video_thumbnail'];
+
+				/*Remplacer le localhost par l'adresse IP*/
+				$mon_ip = $_SERVER['REMOTE_ADDR'];
+
+				$pattern = '/localhost/';
+				$replacement = $mon_ip;
+				$subject = $data_view['video_url'];
+				
+				$row0['video_url'] = preg_replace($pattern, $replacement, $subject);	
 			}
 			else
 			{
 				$row0['video_thumbnail_b'] = $data_view['video_thumbnail'];
 				$row0['video_thumbnail_s'] = $data_view['video_thumbnail'];
+				$row0['video_url'] = $data_view['video_url'];
 			}
 
 			$row0['video_duration'] = $data_view['video_duration'];
@@ -574,18 +654,28 @@
 			$row['id'] = $data['id'];
 			$row['video_type'] = $data['video_type'];
 			$row['video_title'] = $data['video_title'];
-			$row['video_url'] = $data['video_url'];
+			// $row['video_url'] = $data['video_url'];
 			$row['video_id'] = $data['video_id'];
 			
 			if($data['video_type']=='server_url' or $data['video_type']=='local')
 			{
 				$row['video_thumbnail_b'] = $file_path.'images/'.$data['video_thumbnail'];
 				$row['video_thumbnail_s'] = $file_path.'images/thumbs/'.$data['video_thumbnail'];
+
+				/*Remplacer le localhost par l'adresse IP*/
+				$mon_ip = $_SERVER['REMOTE_ADDR'];
+
+				$pattern = '/localhost/';
+				$replacement = $mon_ip;
+				$subject = $data['video_url'];
+				
+				$row['video_url'] = preg_replace($pattern, $replacement, $subject);	
 			}
 			else
 			{
 				$row['video_thumbnail_b'] = $data['video_thumbnail'];
 				$row['video_thumbnail_s'] = $data['video_thumbnail'];
+				$row['video_url'] = $data['video_url'];
 			}
 			
 			$row['video_duration'] = $data['video_duration'];

@@ -23,10 +23,6 @@ function adminUser($username, $password){
     // global $mysqli;
     global $pdo;
 
-    // $sql = "SELECT id,username FROM tbl_admin where username = '".$username."' and password = '".md5($password)."'";       
-    // $result = mysqli_query($mysqli,$sql);
-    // $num_rows = mysqli_num_rows($result);
-
     $result = $pdo->query("SELECT id, username FROM tbl_admin where username = '".$username."' and password = '".md5($password)."'");
 
     /* Détermine le nombre de lignes du jeu de résultats */
@@ -34,8 +30,6 @@ function adminUser($username, $password){
     $num_rows = $result->rowCount();
      
     if ($num_rows > 0){
-        // while ($row = mysqli_fetch_array($result)){
-        // while ($row = $result->fetch_array($result)){
         while ($row = $result->fetch(PDO::FETCH_ASSOC)){
             echo $_SESSION['ADMIN_ID']          = $row['id'];
             echo $_SESSION['ADMIN_USERNAME']    = $row['username'];
@@ -50,20 +44,45 @@ function adminUser($username, $password){
 # Insert Data 
 function Insert($table, $data){
 
-    // global $mysqli;
     global $pdo;
-    //print_r($data);
 
-    $fields = array_keys( $data );  
-    $values = array_map( array($pdo, 'real_escape_string'), array_values( $data ) );
+    $fields = array_keys( $data );
+
+    // $values = array_map( array($pdo, 'real_escape_string'), array_values( $data ) );
+    $values = array_map( array($pdo, 'quote'), array_values( $data ) );
+
+/*debug*/
+   /* $tmp_fields = $fields;
+    $placeholder = [];
+    for($i = 0; $i < count($tmp_fields); $i++ ){
+        $tmp_fields[$i] = ":".$tmp_fields[$i];
+        array_push($placeholder, $tmp_fields[$i]);
+    }*/
+    // var_dump($placeholder);
+    // echo "<br>";
+/*debug*/
+
+    // $values = array_map( array($pdo, 'quote'), array_values( $data ) );
     
-   //echo "INSERT INTO $table(".implode(",",$fields).") VALUES ('".implode("','", $values )."');";
-   //exit;  
-    // mysqli_query($mysqli, "INSERT INTO $table(".implode(",",$fields).") VALUES ('".implode("','", $values )."');") or die( mysqli_error($mysqli) );
+   // echo "INSERT INTO $table(".implode(",",$fields).") VALUES ('".implode("','", $values )."');";
+
+      /*  $tab_combine = array_combine($placeholder, $values);
+
+        echo "<pre>";
+            print_r($tab_combine);
+        echo "</pre>";*/
+   // exit; 
 
     try {
         $pdo->query("INSERT INTO $table(".implode(",",$fields).") VALUES ('".implode("','", $values )."');");
-    } catch (Exception $e) {
+        /*debug*/
+        // $sql = $pdo->prepare("INSERT INTO $table(".implode(",",$fields).") VALUES ('".implode("','", $placeholder )."');");
+        
+        // $tab_combine = array_combine($placeholder, $values);
+
+        // $sql->execute($tab_combine);
+        /*debug*/
+    } catch (PDOException $e) {
         die($e->getMessage());
     }
     
@@ -103,7 +122,6 @@ function Update($table_name, $form_data, $where_clause='')
     $sql .= $whereSQL;
          
     // run and return the query result
-    // return mysqli_query($mysqli,$sql);
     return $pdo->query($sql);
 }
 
@@ -131,7 +149,6 @@ function Delete($table_name, $where_clause='')
     $sql = "DELETE FROM ".$table_name.$whereSQL;
      
     // run and return the query result resource
-    // return mysqli_query($mysqli,$sql);
     return $pdo->query($sql);
 }  
  

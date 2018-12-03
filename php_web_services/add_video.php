@@ -74,7 +74,45 @@
           'video_description'  =>  $_POST['video_description'],
           );    
 
-        $qry = Insert('tbl_video',$data); 
+
+        /*Commenté pour test utilisé une requette directe*/
+        // $qry = Insert('tbl_video',$data);
+
+        /*TEST*/ 
+        $sql = "INSERT INTO tbl_video(
+                  cat_id,
+                  video_type,
+                  video_title,
+                  video_url,
+                  video_id,
+                  video_thumbnail,
+                  video_duration,
+                  video_description
+                )
+                VALUES (
+                  :cat_id,
+                  :video_type,
+                  :video_title,
+                  :video_url,
+                  :video_id,
+                  :video_thumbnail,
+                  :video_duration,
+                  :video_description
+                )";
+
+
+          $query = $pdo->prepare($sql);
+          $query->execute([
+                  ":cat_id" => $data['cat_id'],
+                  ":video_type" => $data['video_type'],
+                  ":video_title" => $data['video_title'],
+                  ":video_url" => $data['video_url'],
+                  ":video_id" => $data['video_id'],
+                  ":video_thumbnail" => $data['video_thumbnail'],
+                  ":video_duration" => $data['video_duration'],
+                  ":video_description" => $data['video_description']
+          ]);
+        /*TEST*/ 
 
       
     $_SESSION['msg']="10";
