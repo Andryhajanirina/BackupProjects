@@ -1,0 +1,9 @@
+# Ajouter dans ce fichier le fichier .env
+# Ignorez tous les logs
+*.log
+
+# Ignorez le fichier .env
+.env
+
+# Ignorez tous les fichier .tmp
+.tmp
